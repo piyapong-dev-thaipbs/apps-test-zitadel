@@ -10,6 +10,7 @@ import { DRIZZLE, type DrizzleDB } from '../db/drizzle.module';
 import { Post, posts } from '../db/schema';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { slugify } from './slug.util';
 
 @Injectable()
 export class PostsService {
@@ -112,13 +113,4 @@ export class PostsService {
       throw new ConflictException(`Slug "${slug}" is already in use`);
     }
   }
-}
-
-/** Lowercase, hyphenated slug. Keeps unicode letters (incl. Thai) and digits. */
-export function slugify(input: string): string {
-  return input
-    .toLowerCase()
-    .trim()
-    .replace(/[^\p{L}\p{N}]+/gu, '-')
-    .replace(/^-+|-+$/g, '');
 }

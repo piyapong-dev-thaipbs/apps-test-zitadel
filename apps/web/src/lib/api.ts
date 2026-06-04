@@ -8,7 +8,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000'
  */
 export async function apiFetch(path: string, init: RequestInit = {}) {
   const session = await auth();
-  const token = (session as any)?.accessToken;
+  const token = (session as { accessToken?: string } | null)?.accessToken;
   if (!token) throw new Error('Not authenticated');
 
   return fetch(`${API_BASE}${path}`, {

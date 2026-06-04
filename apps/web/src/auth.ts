@@ -9,7 +9,7 @@ const PROJECT_ID = process.env.ZITADEL_PROJECT_ID as string;
  * expires. Requires the `offline_access` scope + refresh tokens enabled in the
  * ZITADEL Console.
  */
-async function refreshZitadelToken(token: Record<string, any>) {
+async function refreshZitadelToken(token: Record<string, unknown>) {
   try {
     const res = await fetch(`${DOMAIN}/oauth/v2/token`, {
       method: 'POST',
@@ -69,11 +69,13 @@ const result = NextAuth({
       if (token.expiresAt && Date.now() < (token.expiresAt as number) * 1000) {
         return token;
       }
-      return refreshZitadelToken(token as Record<string, any>);
+      return refreshZitadelToken(token as Record<string, unknown>);
     },
     async session({ session, token }) {
-      (session as any).accessToken = token.accessToken;
-      (session as any).error = (token as any).error;
+      (session as Record<string, unknown>).accessToken = token.accessToken;
+      (session as Record<string, unknown>).error = (
+        token as Record<string, unknown>
+      ).error;
       return session;
     },
   },

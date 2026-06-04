@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { NewPost, posts } from './schema';
-import { slugify } from '../posts/posts.service';
+import { slugify } from '../posts/slug.util';
 
 /**
  * Seed sample blog posts. Run with: `npx nx db:seed @apps/apps`
